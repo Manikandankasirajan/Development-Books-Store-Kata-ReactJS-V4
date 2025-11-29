@@ -29,6 +29,10 @@ describe("test cases for book list component", () => {
 		const { message: message } = renderComponent([]);
 		expect(message).toBeInTheDocument();
 	});
+	it("should no render the message when books available to show", () => {
+		const { message: message } = renderComponent(BOOK_LIST);
+		expect(message).not.toBeInTheDocument();
+	});
 	it("should render books details when books available to show", () => {
 		const { childComponent: childComponent } = renderComponent(BOOK_LIST);
 		expect(childComponent.length).toEqual(BOOK_LIST.length);

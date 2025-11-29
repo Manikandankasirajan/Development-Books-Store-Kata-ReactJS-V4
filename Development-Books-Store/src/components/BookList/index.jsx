@@ -27,7 +27,7 @@ const BookList = ({ bookList = [] }) => {
 	);
 };
 
-BookList.prototype = {
+BookList.propTypes = {
 	bookList: PropTypes.array,
 };
 
