@@ -42,7 +42,7 @@ describe("test cases for book component", () => {
 		const { addtoCartBtn: addtoCartBtn } = renderComponent(BOOK_LIST[0]);
 		expect(addtoCartBtn).toHaveTextContent(/add to cart/i);
 	});
-	it("should call function when add book to cat button is clicked", async () => {
+	it("should call function when add book to cart button is clicked", async () => {
 		const mockFn = vi.fn();
 		const contextValue = { cart: {}, cartAction: mockFn };
 		const { addtoCartBtn: addtoCartBtn } = renderComponent(
@@ -52,5 +52,16 @@ describe("test cases for book component", () => {
 		const user = userEvent.setup();
 		await user.click(addtoCartBtn);
 		expect(mockFn).toBeCalledTimes(1);
+	});
+	it("should disable addtocart button once the book is added to cart", () => {
+		const contextValue = {
+			cart: { [BOOK_LIST[0].title]: 1 },
+			cartAction: vi.fn(),
+		};
+		const { addtoCartBtn: addtoCartBtn } = renderComponent(
+			BOOK_LIST[0],
+			contextValue
+		);
+		expect(addtoCartBtn).toBeDisabled();
 	});
 });
