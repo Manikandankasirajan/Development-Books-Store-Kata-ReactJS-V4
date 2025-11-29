@@ -4,7 +4,7 @@ import { CartContext } from "../../App";
 import getCartQuantity from "../../utils/getCartQuantity";
 import CartQuantityBanner from "../CartQuantityBanner";
 
-const Navbar = () => {
+const Navbar = ({ setShowCart }) => {
 	const { cart, cartAction } = useContext(CartContext);
 	const cartQuantity = getCartQuantity(cart);
 
@@ -17,7 +17,8 @@ const Navbar = () => {
 				<section className="relative flex justify-around items-center ml-5">
 					<button
 						aria-label="show cart button"
-						className="mr-4 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out">
+						className="mr-4 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out"
+						onClick={() => setShowCart((curr) => !curr)}>
 						<FaBagShopping />
 					</button>
 					{cartQuantity > 0 && (

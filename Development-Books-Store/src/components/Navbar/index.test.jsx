@@ -3,6 +3,7 @@ import Navbar from ".";
 import { expect, vi } from "vitest";
 import { CartContext } from "../../App";
 import getCartQuantity from "../../utils/getCartQuantity";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("react-icons/fa6", () => ({
 	FaBagShopping: () => (
@@ -22,11 +23,11 @@ vi.mock("../CartQuantityBanner", () => ({
 	),
 }));
 
-function renderComponent(mockCartQuantityValue = 0) {
+function renderComponent(mockCartQuantityValue = 0, propValue = vi.fn()) {
 	getCartQuantity.mockReturnValue(mockCartQuantityValue);
 	render(
 		<CartContext value={{ cart: {}, cartAction: vi.fn() }}>
-			<Navbar />
+			<Navbar setShowCart={propValue} />
 		</CartContext>
 	);
 	return {
@@ -52,10 +53,17 @@ describe("test cases for Navbar component layout", () => {
 		const { cartQuantityComponent: cartQuantityComponent } = renderComponent();
 		expect(cartQuantityComponent).not.toBeInTheDocument();
 	});
-	it("should  render cart quantity banner when cart has items", () => {
+	it("should render cart quantity banner when cart has items", () => {
 		const cartQuantity = 2;
 		const { cartQuantityComponent: cartQuantityComponent } =
 			renderComponent(cartQuantity);
 		expect(cartQuantityComponent).toBeInTheDocument();
+	});
+	it("should trigger mock function when show cart button is clicked", async () => {
+		const mockFn = vi.fn();
+		const { showCartBtn: showCartBtn } = renderComponent(0, mockFn);
+		const user = userEvent.setup();
+		await user.click(showCartBtn);
+		expect(mockFn).toHaveBeenCalledTimes(1);
 	});
 });
