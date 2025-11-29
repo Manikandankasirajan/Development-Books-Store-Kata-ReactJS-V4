@@ -20,4 +20,9 @@ describe("test cases for book component", () => {
 		const { bookTitle: bookTitle } = renderComponent(BOOK_LIST[0]);
 		expect(bookTitle).toHaveTextContent(BOOK_LIST[0].title);
 	});
+	it("should render truncated book Title when book name length is more that limit", () => {
+		const truncatedTitle = BOOK_LIST[3].title.slice(0, 25) + "...";
+		const { bookTitle: bookTitle } = renderComponent(BOOK_LIST[3]);
+		expect(bookTitle).toHaveTextContent(truncatedTitle);
+	});
 });
