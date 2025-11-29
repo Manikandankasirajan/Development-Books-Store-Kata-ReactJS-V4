@@ -1,4 +1,5 @@
 import React from "react";
+import { FaBagShopping } from "react-icons/fa6";
 
 const Navbar = () => {
 	return (
@@ -7,6 +8,13 @@ const Navbar = () => {
 				<h1 className="text-3xl font-bold text-white">
 					Development Books Store
 				</h1>
+				<section className="relative flex justify-around items-center ml-5">
+					<button
+						aria-label="show cart button"
+						className="mr-4 text-3xl text-white font-bold cursor-pointer hover:scale-110 transition delay-150 duration-300 ease-in-out">
+						<FaBagShopping />
+					</button>
+				</section>
 			</nav>
 		</header>
 	);
