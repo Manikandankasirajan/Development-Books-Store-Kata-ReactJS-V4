@@ -15,8 +15,15 @@ vi.mock("../../utils/getCartQuantity", () => ({
 
 vi.mock("../EmptyCart", () => ({
 	default: () => (
-		<div data-testid="emptyCartComponenet">
+		<div data-testid="emptyCartComponent">
 			This is a Mock Empty Cart Component
+		</div>
+	),
+}));
+vi.mock("../CartSummary", () => ({
+	default: () => (
+		<div data-testid="cartSummaryComponent">
+			This is a Mock Cart Summary Component
 		</div>
 	),
 }));
@@ -31,7 +38,8 @@ function renderComponent(propValue = vi.fn(), mockValue = 0) {
 	return {
 		closeCartBtn: screen.getByRole("button"),
 		closeIcon: screen.getByTestId("fa-xmark"),
-		emptyCartComponenet: screen.getByTestId("emptyCartComponenet"),
+		emptyCartComponent: screen.queryByTestId("emptyCartComponent"),
+		cartSummaryComponent: screen.queryByTestId("cartSummaryComponent"),
 	};
 }
 
@@ -50,7 +58,25 @@ describe("test cases for cart component", () => {
 		expect(mockFn).toHaveBeenCalledTimes(1);
 	});
 	it("should render empty cart component when cart is empty", () => {
-		const { emptyCartComponenet: emptyCartComponenet } = renderComponent();
-		expect(emptyCartComponenet).toBeInTheDocument();
+		const { emptyCartComponent: emptyCartComponent } = renderComponent();
+		expect(emptyCartComponent).toBeInTheDocument();
+	});
+	it("should not render empty cart component when cart has items", () => {
+		const { emptyCartComponent: emptyCartComponent } = renderComponent(
+			vi.fn(),
+			2
+		);
+		expect(emptyCartComponent).not.toBeInTheDocument();
+	});
+	it("should not render cart summary component when cart is empty", () => {
+		const { cartSummaryComponent: cartSummaryComponent } = renderComponent();
+		expect(cartSummaryComponent).not.toBeInTheDocument();
+	});
+	it("should render cart summary component when cart has items", () => {
+		const { cartSummaryComponent: cartSummaryComponent } = renderComponent(
+			vi.fn(),
+			2
+		);
+		expect(cartSummaryComponent).toBeInTheDocument();
 	});
 });

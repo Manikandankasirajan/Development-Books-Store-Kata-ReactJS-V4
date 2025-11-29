@@ -3,6 +3,7 @@ import { FaXmark } from "react-icons/fa6";
 import { CartContext } from "../../App";
 import getCartQuantity from "../../utils/getCartQuantity";
 import EmptyCart from "../EmptyCart";
+import CartSummary from "../CartSummary";
 
 const Cart = ({ setShowCart }) => {
 	const { cart, cartAction } = useContext(CartContext);
@@ -15,7 +16,7 @@ const Cart = ({ setShowCart }) => {
 					onClick={() => setShowCart((curr) => !curr)}>
 					<FaXmark />
 				</button>
-				{cartQuantity === 0 && <EmptyCart />}
+				{cartQuantity === 0 ? <EmptyCart /> : <CartSummary />}
 			</section>
 		</section>
 	);
