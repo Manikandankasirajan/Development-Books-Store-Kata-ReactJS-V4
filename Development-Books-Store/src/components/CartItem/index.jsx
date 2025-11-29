@@ -10,6 +10,9 @@ const CartItem = ({ book }) => {
 					{bookTitle}
 				</h3>
 			</section>
+			<section className="col-span-1 flex justify-center items-center">
+				<p className="font-bold">{bookCount}</p>
+			</section>
 		</section>
 	);
 };
