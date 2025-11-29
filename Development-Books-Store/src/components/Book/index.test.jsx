@@ -8,6 +8,7 @@ function renderComponent(propsValue) {
 	return {
 		bookImage: screen.getByRole("img"),
 		bookTitle: screen.getByRole("heading", { level: 3 }),
+		bookPrice: screen.getByRole("heading", { level: 4 }),
 	};
 }
 
@@ -24,5 +25,9 @@ describe("test cases for book component", () => {
 		const truncatedTitle = BOOK_LIST[3].title.slice(0, 25) + "...";
 		const { bookTitle: bookTitle } = renderComponent(BOOK_LIST[3]);
 		expect(bookTitle).toHaveTextContent(truncatedTitle);
+	});
+	it("should render book price", () => {
+		const { bookPrice: bookPrice } = renderComponent(BOOK_LIST[0]);
+		expect(bookPrice).toHaveTextContent(BOOK_LIST[0].price);
 	});
 });
