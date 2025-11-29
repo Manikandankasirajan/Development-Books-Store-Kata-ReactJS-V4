@@ -8,6 +8,9 @@ import getBookPrice from "../../utils/getBookPrice";
 vi.mock("react-icons/fa6", () => ({
 	FaMinus: () => <div data-testid="fa-minus">This is a Mock FaMinus Icon</div>,
 	FaPlus: () => <div data-testid="fa-plus">This is a Mock FaPlus Icon</div>,
+	FaRegTrashCan: () => (
+		<div data-testid="fa-reg-trash-can">This is a Mock FaRegTrashCan Icon</div>
+	),
 }));
 
 vi.mock("../../utils/getBookPrice", () => ({
@@ -29,6 +32,8 @@ function renderComponent(propValues = [], cartAction = vi.fn()) {
 		increasseBookCountBtn: screen.getByLabelText("increaseBookQuantity"),
 		plusIcon: screen.queryByTestId("fa-plus"),
 		bookPrice: screen.queryByRole("heading", { level: 4 }),
+		removeBookBtn: screen.getByLabelText("removeBook"),
+		trashCanIcon: screen.queryByTestId("fa-reg-trash-can"),
 	};
 }
 
@@ -91,5 +96,20 @@ describe("test cases for cart item component", () => {
 		const book = ["Clean Code", 2];
 		const { bookPrice: bookPrice } = renderComponent(book);
 		expect(bookPrice).toHaveTextContent(100);
+	});
+	it("should render remove book from cart button with trash can icon", () => {
+		const book = ["Clean Code", 2];
+		const { removeBookBtn: removeBookBtn, trashCanIcon: trashCanIcon } =
+			renderComponent(book);
+		expect(removeBookBtn).toBeInTheDocument();
+		expect(trashCanIcon).toBeInTheDocument();
+	});
+	it("should trigger function when remove book button is clicked", async () => {
+		const book = ["Clean Code", 2];
+		const mockFn = vi.fn();
+		const { removeBookBtn: removeBookBtn } = renderComponent(book, mockFn);
+		const user = userEvent.setup();
+		await user.click(removeBookBtn);
+		expect(mockFn).toHaveBeenCalledTimes(1);
 	});
 });

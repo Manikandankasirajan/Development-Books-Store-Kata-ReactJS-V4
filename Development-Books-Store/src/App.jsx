@@ -19,6 +19,10 @@ const handlers = {
 		...state,
 		[action.payload]: state[action.payload] - 1,
 	}),
+	removeFromCart: (state, action) => {
+		const { [action.payload]: _, ...rest } = state;
+		return rest;
+	},
 };
 
 function cartReducerFn(state, action) {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa6";
+import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import { CartContext } from "../../App";
 import getBookPrice from "../../utils/getBookPrice";
 
@@ -46,6 +46,19 @@ const CartItem = ({ book }) => {
 			</section>
 			<section className="col-span-1 flex justify-center items-center">
 				<h4>{bookPrice}</h4>
+			</section>
+			<section className="col-span-1 flex justify-center items-center">
+				<button
+					aria-label="removeBook"
+					className="hover:opacity-50 cursor-pointer "
+					onClick={() =>
+						cartAction({
+							type: "removeFromCart",
+							payload: bookTitle,
+						})
+					}>
+					<FaRegTrashCan />
+				</button>
 			</section>
 		</section>
 	);
