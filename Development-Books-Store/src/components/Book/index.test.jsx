@@ -9,6 +9,7 @@ function renderComponent(propsValue) {
 		bookImage: screen.getByRole("img"),
 		bookTitle: screen.getByRole("heading", { level: 3 }),
 		bookPrice: screen.getByRole("heading", { level: 4 }),
+		addtoCartBtn: screen.getByRole("button"),
 	};
 }
 
@@ -29,5 +30,9 @@ describe("test cases for book component", () => {
 	it("should render book price", () => {
 		const { bookPrice: bookPrice } = renderComponent(BOOK_LIST[0]);
 		expect(bookPrice).toHaveTextContent(BOOK_LIST[0].price);
+	});
+	it("should rende add book to cat button", () => {
+		const { addtoCartBtn: addtoCartBtn } = renderComponent(BOOK_LIST[0]);
+		expect(addtoCartBtn).toHaveTextContent(/add to cart/i);
 	});
 });
