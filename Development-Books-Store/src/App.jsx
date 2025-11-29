@@ -11,6 +11,14 @@ const handlers = {
 		...state,
 		[action.payload]: 1,
 	}),
+	increaseBookQuantity: (state, action) => ({
+		...state,
+		[action.payload]: state[action.payload] + 1,
+	}),
+	reduceBookQuantity: (state, action) => ({
+		...state,
+		[action.payload]: state[action.payload] - 1,
+	}),
 };
 
 function cartReducerFn(state, action) {
