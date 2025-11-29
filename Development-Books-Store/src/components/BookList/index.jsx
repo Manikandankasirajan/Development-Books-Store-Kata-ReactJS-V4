@@ -1,7 +1,8 @@
 import React from "react";
 import Book from "../Book";
+import PropTypes from "prop-types";
 
-const BookList = ({bookList}) => {
+const BookList = ({ bookList = [] }) => {
 	return (
 		<main className="p-12 bg-gray-200">
 			<h2 className="mb-8 px-5 text-xl font-bold text-center">
@@ -24,6 +25,10 @@ const BookList = ({bookList}) => {
 			)}
 		</main>
 	);
+};
+
+BookList.prototype = {
+	bookList: PropTypes.array,
 };
 
 export default BookList;
