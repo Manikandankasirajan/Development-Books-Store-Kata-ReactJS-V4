@@ -3,13 +3,19 @@ import CartItem from ".";
 import { expect, vi } from "vitest";
 import { CartContext } from "../../App";
 import userEvent from "@testing-library/user-event";
+import getBookPrice from "../../utils/getBookPrice";
 
 vi.mock("react-icons/fa6", () => ({
 	FaMinus: () => <div data-testid="fa-minus">This is a Mock FaMinus Icon</div>,
 	FaPlus: () => <div data-testid="fa-plus">This is a Mock FaPlus Icon</div>,
 }));
 
+vi.mock("../../utils/getBookPrice", () => ({
+	default: vi.fn(),
+}));
+
 function renderComponent(propValues = [], cartAction = vi.fn()) {
+	getBookPrice.mockReturnValue(50);
 	render(
 		<CartContext value={{ cart: {}, cartAction: cartAction }}>
 			<CartItem book={propValues} />
@@ -22,6 +28,7 @@ function renderComponent(propValues = [], cartAction = vi.fn()) {
 		minusIcon: screen.queryByTestId("fa-minus"),
 		increasseBookCountBtn: screen.getByLabelText("increaseBookQuantity"),
 		plusIcon: screen.queryByTestId("fa-plus"),
+		bookPrice: screen.queryByRole("heading", { level: 4 }),
 	};
 }
 
@@ -79,5 +86,10 @@ describe("test cases for cart item component", () => {
 		const user = userEvent.setup();
 		await user.click(increasseBookCountBtn);
 		expect(mockFn).toHaveBeenCalledTimes(1);
+	});
+	it("should render book price", () => {
+		const book = ["Clean Code", 2];
+		const { bookPrice: bookPrice } = renderComponent(book);
+		expect(bookPrice).toHaveTextContent(100);
 	});
 });

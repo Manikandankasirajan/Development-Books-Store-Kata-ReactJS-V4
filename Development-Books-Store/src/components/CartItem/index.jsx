@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { CartContext } from "../../App";
+import getBookPrice from "../../utils/getBookPrice";
 
 const CartItem = ({ book }) => {
 	const { cartAction: cartAction } = useContext(CartContext);
 	const [bookTitle, bookCount] = book;
 	const isBtnDisabled = bookCount < 2;
+	const bookPrice = getBookPrice(bookTitle) * bookCount;
 
 	return (
 		<section className="w-full px-3 py-2 mt-5 grid grid-cols-5 gap-3 bg-white  rounded-2xl">
@@ -41,6 +43,9 @@ const CartItem = ({ book }) => {
 						<FaPlus />
 					</button>
 				</section>
+			</section>
+			<section className="col-span-1 flex justify-center items-center">
+				<h4>{bookPrice}</h4>
 			</section>
 		</section>
 	);
